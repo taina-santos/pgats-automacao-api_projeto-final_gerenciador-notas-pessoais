@@ -1,0 +1,133 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gerenciador de Notas Pessoais API",
+    "version": "1.0.0",
+    "description": "API para registro, login, gerenciamento de usuários e notas pessoais."
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/users/register": {
+      "post": {
+        "summary": "Registrar novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Usuário registrado com sucesso." },
+          "409": { "description": "Usuário já existe." },
+          "400": { "description": "Dados inválidos." }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login do usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login bem-sucedido" },
+          "401": { "description": "Credenciais inválidas." },
+          "400": { "description": "Dados inválidos." }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Consultar usuários e suas notas",
+        "responses": {
+          "200": { "description": "Lista de usuários, quantidade e notas." }
+        }
+      }
+    },
+    "/notes": {
+      "get": {
+        "summary": "Consultar notas pessoais do usuário logado",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de notas do usuário." },
+          "401": { "description": "Token inválido ou ausente." },
+          "403": { "description": "Token inválido." }
+        }
+      },
+      "post": {
+        "summary": "Criar nota pessoal",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "content": { "type": "string" }
+                },
+                "required": ["title", "content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Nota criada com sucesso." },
+          "401": { "description": "Token inválido ou ausente." },
+          "403": { "description": "Token inválido." },
+          "400": { "description": "Dados inválidos." }
+        }
+      }
+    },
+    "/notes/{id}": {
+      "delete": {
+        "summary": "Excluir nota pessoal do usuário logado",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Nota excluída com sucesso." },
+          "401": { "description": "Token inválido ou ausente." },
+          "403": { "description": "Token inválido." },
+          "404": { "description": "Nota não encontrada ou não pertence ao usuário." }
+        }
+      }
+    }
+  }
+}

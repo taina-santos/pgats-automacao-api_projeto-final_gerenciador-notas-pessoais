@@ -5,18 +5,16 @@ function findUserByUsername(username) {
   return users.find(u => u.username === username);
 }
 
-function register(req, res) {
-  const { username, password } = req.body;
-  if (!username || !password){
-    return res.status(400).json({ error: 'Usuário e senha obrigatórios.' });
+function register({ username, password }) {
+  if(findUserByUsername(username)){
+    throw new Error('Usuário já existe');
   }
 
-  if (users.find(u => u.username === username)){
-    return res.status(409).json({ error: 'Usuário já existe.' });
-  }
-  
-  users.push({ username, password });
-  res.status(201).json({ message: 'Usuário registrado com sucesso.' });
+  const notesCount = 0;
+  const user = { username, password, notesCount }
+  users.push(user);
+
+  return user;
 }
 
 function login({ username, password }) {

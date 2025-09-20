@@ -1,28 +1,29 @@
 const { notes } = require('../model/noteModel');
-const { users } = require('../model/userModel');
 
-function getNotesByUser(req, res) {
-  const username = req.user.username;
-  const userNotes = notes.filter(n => n.username === username);
-  res.json(userNotes);
+function getNotesByUser(username) {
+  return notes.filter(n => n.username === username);
 }
 
-function createNote(req, res) {
-  const username = req.user.username;
-  const { title, content } = req.body;
-  if (!title || !content) return res.status(400).json({ error: 'Título e conteúdo obrigatórios.' });
-  const id = notes.length + 1;
-  notes.push({ id, username, title, content });
-  res.status(201).json({ message: 'Nota criada com sucesso.', id });
+// Esse método vai ajudar a garantir que mesmo após excluir um item no meio do array de notes,
+// o id seguirá sendo incrementado, não havendo duplicação de id
+function getMaxIdNumber(){
+  return notes.length > 0 ? Math.max(...notes.map(note => note.id)) : 0;
 }
 
-function deleteNote(req, res) {
-  const username = req.user.username;
-  const id = parseInt(req.params.id);
-  const idx = notes.findIndex(n => n.id === id && n.username === username);
-  if (idx === -1) return res.status(404).json({ error: 'Nota não encontrada ou não pertence ao usuário.' });
+function createNote({ username, title, content }) {
+  const id = getMaxIdNumber() + 1;
+  const note = { id, username, title, content };
+  notes.push(note);
+  return note;
+}
+
+function deleteNote({ paramId, username }) {
+  const idx = notes.findIndex(n => n.id === paramId && n.username === username);
+  if(idx === -1){
+    throw new Error('Nota não encontrada ou não pertence ao usuário.');
+  }
+  totalNotes = notes.length;
   notes.splice(idx, 1);
-  res.json({ message: 'Nota excluída com sucesso.' });
 }
 
 module.exports = { getNotesByUser, createNote, deleteNote };

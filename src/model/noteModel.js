@@ -1,16 +1,4 @@
-// Banco de dados em memória
-const users = [{
-        username: "taina",
-        password: "123456",
-        notesCount: 2
-    },
-    {
-        username: "rafael",
-        password: "123456",
-        notesCount: 1
-    }
-];
-
+// Banco de dados de notes em memória
 const notes = [{
         id: 1,
         username: "taina",
@@ -31,4 +19,4 @@ const notes = [{
     }
 ];
 
-module.exports = { users, notes };
+module.exports = { notes };

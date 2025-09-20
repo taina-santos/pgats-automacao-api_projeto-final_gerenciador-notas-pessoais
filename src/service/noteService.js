@@ -1,4 +1,5 @@
-const { notes } = require('../model/db');
+const { notes } = require('../model/noteModel');
+const { users } = require('../model/userModel');
 
 function getNotesByUser(req, res) {
   const username = req.user.username;

@@ -1,31 +1,39 @@
-const { users, notes } = require('../model/db');
-const jwt = require('jsonwebtoken');
-const { SECRET } = require('../../rest/middleware/authMiddleware');
+const { users } = require('../model/userModel');
+const { notes } = require('../model/noteModel');
+
+function findUserByUsername(username) {
+  return users.find(u => u.username === username);
+}
 
 function register(req, res) {
   const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ error: 'Usuário e senha obrigatórios.' });
-  if (users.find(u => u.username === username)) return res.status(409).json({ error: 'Usuário já existe.' });
+  if (!username || !password){
+    return res.status(400).json({ error: 'Usuário e senha obrigatórios.' });
+  }
+
+  if (users.find(u => u.username === username)){
+    return res.status(409).json({ error: 'Usuário já existe.' });
+  }
+  
   users.push({ username, password });
   res.status(201).json({ message: 'Usuário registrado com sucesso.' });
 }
 
-function login(req, res) {
-  const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ error: 'Usuário e senha obrigatórios.' });
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) return res.status(401).json({ error: 'Credenciais inválidas.' });
-  // Gera token JWT
-  const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
-  res.json({ token });
+function login({ username, password }) {
+  const user = findUserByUsername(username);
+  if (!user || user.password !== password) {
+    throw new Error('Credenciais inválidas');
+  }
+
+  return user;
 }
 
-function getUsers(req, res) {
+function getUsers() {
   const result = users.map(u => ({
     username: u.username,
     notesCount: notes.filter(n => n.username === u.username).length
   }));
-  res.json(result);
+  return result;
 }
 
 module.exports = { register, login, getUsers };

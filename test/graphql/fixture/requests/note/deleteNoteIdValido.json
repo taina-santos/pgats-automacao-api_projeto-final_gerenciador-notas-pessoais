@@ -1,0 +1,6 @@
+{
+    "query": "mutation DeleteNote($deleteNoteId: ID!) { deleteNote(id: $deleteNoteId) }",
+    "variables": {
+        "deleteNoteId": 3
+    }
+}

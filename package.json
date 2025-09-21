@@ -8,7 +8,8 @@
     "start-rest": "node rest/server.js",
     "start-graphql": "node graphql/server.js",
     "test-controller-rest": "mocha test/rest/controller/**/*.test.js",
-    "test-external-rest": "mocha test/rest/external/**/*.test.js"
+    "test-external-rest": "mocha test/rest/external/**/*.test.js",
+    "test-external-graphql": "mocha test/graphql/external/**/*.test.js"
   },
   "author": "",
   "license": "ISC",

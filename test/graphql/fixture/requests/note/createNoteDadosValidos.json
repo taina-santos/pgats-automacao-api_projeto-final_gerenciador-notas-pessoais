@@ -1,0 +1,7 @@
+{
+    "query": "mutation Register($title: String!, $content: String!) { createNote(title: $title, content: $content) { id username title content }}",
+    "variables": {
+        "title": "adição de nota",
+        "content": "validação do script de criar nota"   
+    }
+}

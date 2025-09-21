@@ -29,7 +29,7 @@ Projeto de gerenciador de notas pessoas, criado e utilizado como projeto final d
 
 - Para iniciar o servidor:
   ```powershell
-  npm start
+  npm run start-rest
   ```
   OU
   ```powershell
@@ -53,3 +53,35 @@ Projeto de gerenciador de notas pessoas, criado e utilizado como projeto final d
 ### Documentação Swagger
 
 - Acesse a documentação interativa em: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+
+## Executando a API GraphQL
+
+- Para iniciar o servidor GraphQL:
+  ```powershell
+  npm run start-graphql
+  ```
+  OU
+  ```powershell
+  node graphql/server.js
+  ```
+- A API GraphQL estará disponível em `http://localhost:4000/graphql`.
+
+### Queries e Mutations principais
+
+- `register(username, password): String` — Registro de usuário
+- `login(username, password): String` — Login (retorna token JWT)
+- `users: [User]` — Consulta usuários, quantidade e lista de notas
+- `notes: [Note]` — Consulta notas do usuário logado (requer token)
+- `createNote(title, content): Note` — Criação de nota (requer token)
+- `deleteNote(id): String` — Exclusão de nota (requer token)
+
+### Autenticação GraphQL
+
+- Após login, utilize o token JWT no header `Authorization` como `Bearer <token>` para acessar Mutations protegidas.
+
+### Instalação de dependências GraphQL
+
+Execute:
+```powershell
+npm install apollo-server-express express graphql jsonwebtoken
+```

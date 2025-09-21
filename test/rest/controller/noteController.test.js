@@ -124,10 +124,12 @@ describe('Note Controller', () => {
         });
 
         it('Quando crio uma nota pessoal sem passar nenhum token, o retorno será 401', async () => {
+            const postCreateNoteRequest = require('../fixture/controller/requests/requisicaoNoteControllerCreateNotaValida.json');
+
             const noteServiceMock = sinon.stub(noteService, 'createNote');
             noteServiceMock.throws(new Error('Token de acesso requerido.'));
 
-            const resposta = await request(app).post(postCreateNote);
+            const resposta = await request(app).post(postCreateNote).send(postCreateNoteRequest);
             const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken401.json');
 
             expect(resposta.status).to.equal(401);
@@ -135,10 +137,12 @@ describe('Note Controller', () => {
         });
 
         it('Quando crio uma nota pessoal enviando um token incorreto, o retorno será 403', async () => {
+            const postCreateNoteRequest = require('../fixture/controller/requests/requisicaoNoteControllerCreateNotaValida.json');
+
             const noteServiceMock = sinon.stub(noteService, 'createNote');
             noteServiceMock.throws(new Error('Token inválido.'));
 
-            const resposta = await request(app).post(postCreateNote).set('Authorization', `Bearer tokenInvalido`);
+            const resposta = await request(app).post(postCreateNote).set('Authorization', `Bearer tokenInvalido`).send(postCreateNoteRequest);
             const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken403.json');
 
             expect(resposta.status).to.equal(403);

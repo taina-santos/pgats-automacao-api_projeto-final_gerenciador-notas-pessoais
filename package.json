@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node rest/server.js",
-    "test-controller-rest": "mocha test/rest/controller/**/*.test.js"
+    "start-rest": "node rest/server.js",
+    "test-controller-rest": "mocha test/rest/controller/**/*.test.js",
+    "test-external-rest": "mocha test/rest/external/**/*.test.js"
   },
   "author": "",
   "license": "ISC",

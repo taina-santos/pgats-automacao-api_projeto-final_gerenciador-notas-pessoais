@@ -15,12 +15,12 @@ O banco de dados será em memória, armazenando dados em variáveis. O diretóri
 
 ## Prompt para adicionar JWT
 Objetivo:
-Implementar autenticação via Bearer Token (JWT) para as rotas de transferências (tanto no Swagger quanto no projeto em si).
+Implementar autenticação via Bearer Token (JWT) para as rotas de notes (tanto no Swagger quanto no projeto em si).
 
 Contexto:
 Já possuo operações de registro e login do usuário, mas agora quero ter a possibilidade de limitar o acesso a todas as ações de consultar, criar e excluir notas pessoais com base no JWT obtido no login.
 
 Regras:
-1) Faça uso de validador de autenticação que atinga a rota de transferências
+1) Faça uso de validador de autenticação que atinja a rota de notes
 2) Caso a rota de Login ainda não retorne o token JWT, implemente essa funcionalidade
-3) Não altere meus testes, eu farei isso sozinho
+3) Não implemente nenhum teste, eu farei isso sozinho

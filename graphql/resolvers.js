@@ -46,9 +46,7 @@ module.exports = {
       const user = getUserFromToken(token);
       if (!user) throw new Error('Token inválido ou ausente');
       // Delete note
-      const username = user.username;
-      const paramId = id;
-      noteService.deleteNote({paramId, username});
+      noteService.deleteNote({ paramId: parseInt(id), username: user.username });
       return 'Nota excluída com sucesso.';
     }
   }

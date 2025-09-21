@@ -9,7 +9,7 @@ const postUserRegister = '/users/register';
 const postUserLogin = '/users/login';
 const getUser = '/users';
 
-describe('User External', () => {
+describe('User External via REST', () => {
     describe('POST /users/register', () => {
         it('Quando registro um usuário com campos válidos, o retorno será 201', async () => {
             const postRegisterRequest = require('../fixture/external/requests/requisicaoUserExternalRegisterSucesso.json');

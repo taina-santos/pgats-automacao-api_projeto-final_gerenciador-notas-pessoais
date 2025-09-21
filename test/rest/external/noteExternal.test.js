@@ -12,7 +12,7 @@ const postUserLogin = '/users/login';
 
 var token = "";
 
-describe('Note External', () => {
+describe('Note External via REST', () => {
     before(async () => {
         const loginBody = require('../fixture/external/requests/requisicaoUserExternalLoginUsuarioValido.json');
 

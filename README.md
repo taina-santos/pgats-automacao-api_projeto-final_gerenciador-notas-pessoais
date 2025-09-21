@@ -29,7 +29,11 @@ Projeto de gerenciador de notas pessoas, criado e utilizado como projeto final d
 
 - Para iniciar o servidor:
   ```powershell
-  npm start OU node rest/server.js
+  npm start
+  ```
+  OU
+  ```powershell
+  node rest/server.js
   ```
 - A API estará disponível em `http://localhost:3000`.
 

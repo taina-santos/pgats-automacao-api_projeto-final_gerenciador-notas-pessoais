@@ -1,0 +1,9 @@
+{
+  "message": "Nota criada com sucesso.",
+  "note": {
+    "id": 4,
+    "username": "taina",
+    "title": "teste do controller",
+    "content": "testando o controller do post create note"
+  }
+}

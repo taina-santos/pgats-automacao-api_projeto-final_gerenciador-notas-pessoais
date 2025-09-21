@@ -1,0 +1,8 @@
+{
+  "message": "Usuário registrado com sucesso.",
+  "user": {
+    "username": "novo usuario teste",
+    "password": "123456",
+    "notesCount": 0
+  }
+}

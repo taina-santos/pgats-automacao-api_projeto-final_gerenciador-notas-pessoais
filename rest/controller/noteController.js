@@ -7,7 +7,7 @@ router.get('/', authenticateJWT, (req, res) => {
   res.json({ notes: noteService.getNotesByUser(req.user.username) });
 });
 
-router.post('/', authenticateJWT, (req, res) => {
+router.post('/create', authenticateJWT, (req, res) => {
   const { title, content } = req.body;
   const username = req.user.username;
   if(!title || !content){

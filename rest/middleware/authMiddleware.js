@@ -5,7 +5,7 @@ function authenticateJWT(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Token ausente ou inválido.' });
+    return res.status(401).json({ error: 'Token de acesso requerido.' });
   }
 
   const token = authHeader.split(' ')[1];

@@ -24,3 +24,20 @@ Regras:
 1) Faça uso de validador de autenticação que atinja a rota de notes
 2) Caso a rota de Login ainda não retorne o token JWT, implemente essa funcionalidade
 3) Não implemente nenhum teste, eu farei isso sozinho
+
+## Prompt para criar a API em GraphQL
+Objetivo:
+Expor o userService e noteService através de uma interface Graphql usando ApolloServer e Javascript.
+
+Contexto:
+1. Construa essa API GraphQL com base nos meus testes da API Rest que estão abertos
+2. Leve em consideração os dados de entrada e saída (fixtures) dos testes para definir os Types
+3. Para definir Queries e Mutations, olhe para os métodos usados nos testes para acessar a API Rest
+4. Proponha as bibliotecas que eu precisarei instalar
+
+Regras:
+1. Separe um arquivo para o app.js e outro para o server.js, pois posteriormente essa API será testada com Supertest, que precisará importar o app sem o método listen().
+2. Adicione uma seção ao final do README.md para refletir também as informações sobre a execução da API GraphQL
+3. Crie toda a estrutura dessa API GraphQL em uma pasta chamada graphql (inclusive app.js e server.js)
+4. Habilite a possibilidade de autenticação das Mutations de notes com uso de JWT, que será obtida a partir do login do user.
+5. Ajuste a versão do ApolloServer e do Express para que dêem match.

@@ -1,0 +1,7 @@
+{
+    "query": "mutation Register($username: String!, $password: String!) { register(username: $username, password: $password) { username notesCount }}",
+    "variables": { 
+        "username": "novo usuario", 
+        "password": "123456" 
+    }
+}

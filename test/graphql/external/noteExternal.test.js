@@ -5,7 +5,7 @@ use(chaiExclude);
 
 const host = 'http://localhost:4000/graphql';
 
-describe('Note external via GraphQL', () => {
+describe.skip('Note external via GraphQL', () => {
     describe('Mutation: create note', () => {
         it('', async () => {});
     });

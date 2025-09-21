@@ -1,10 +1,7 @@
-name: 'Validando o pull request e o push para branch main'
+name: 'Executando o job manualmente'
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   test:

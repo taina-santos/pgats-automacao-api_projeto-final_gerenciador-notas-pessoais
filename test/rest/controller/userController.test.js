@@ -19,7 +19,7 @@ describe('User Controller', () => {
 
     describe('POST /users/register', () => {
         it('Quando registro um usuário com campos válidos, o retorno será 201', async () => {
-            const postRegisterRequest = require('../fixture/controller/requests/requisicaoUserControllerRegisterSucesso.json');
+            const postRegisterRequest = require('../fixture/controller/requests/user/requisicaoUserControllerRegisterSucesso.json');
             
             const userServiceMock = sinon.stub(userService, 'register');
             userServiceMock.returns({
@@ -29,33 +29,33 @@ describe('User Controller', () => {
             });
 
             const resposta = await request(app).post(postUserRegister).send(postRegisterRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerRegister201.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerRegister201.json');
             
             expect(resposta.status).to.equal(201);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando tento registrar um usuário já existente, o retorno será 409', async () => {
-            const postRegisterRequest = require('../fixture/controller/requests/requisicaoUserControllerRegisterUsuarioExistente.json');
+            const postRegisterRequest = require('../fixture/controller/requests/user/requisicaoUserControllerRegisterUsuarioExistente.json');
 
             const userServiceMock = sinon.stub(userService, 'register');
             userServiceMock.throws(new Error('Usuário já existe'));
 
             const resposta = await request(app).post(postUserRegister).send(postRegisterRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerRegister409.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerRegister409.json');
 
             expect(resposta.status).to.equal(409);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quanto tento registrar com todos os campos vazios, o retorno será 400', async () => {
-            const postRegisterRequest = require('../fixture/controller/requests/requisicaoUserControllerRegisterCamposVazios.json');
+            const postRegisterRequest = require('../fixture/controller/requests/user/requisicaoUserControllerRegisterCamposVazios.json');
 
             const userServiceMock = sinon.stub(userService, 'register');
             userServiceMock.throws(new Error('Usuário e senha obrigatórios.'));
 
             const resposta = await request(app).post(postUserRegister).send(postRegisterRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerRegister400.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerRegister400.json');
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -64,7 +64,7 @@ describe('User Controller', () => {
 
     describe('POST /users/login', () => {
         it('Quando efetuo o login com um usuário e senha válidos, o retorno será 200', async () => {
-            const postLoginRequest = require('../fixture/controller/requests/requisicaoUserControllerLoginUsuarioValido.json');
+            const postLoginRequest = require('../fixture/controller/requests/user/requisicaoUserControllerLoginUsuarioValido.json');
 
             const userServiceMock = sinon.stub(userService, 'login');
             userServiceMock.returns({
@@ -74,46 +74,46 @@ describe('User Controller', () => {
             });
 
             const resposta = await request(app).post(postUserLogin).send(postLoginRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerLogin200.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerLogin200.json');
 
             expect(resposta.status).to.equal(200);
             expect(resposta.body).excluding('token').to.deep.equal(respostaEsperada);
         });
 
         it('Quando efetuo o login com um usuário válido e senha inválida, o retorno será 401', async () => {
-            const postLoginRequest = require('../fixture/controller/requests/requisicaoUserControllerLoginCredenciaisInvalidas.json');
+            const postLoginRequest = require('../fixture/controller/requests/user/requisicaoUserControllerLoginCredenciaisInvalidas.json');
 
             const userServiceMock = sinon.stub(userService, 'login');
             userServiceMock.throws(new Error('Credenciais inválidas'));
 
             const resposta = await request(app).post(postUserLogin).send(postLoginRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerLogin401.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerLogin401.json');
 
             expect(resposta.status).to.equal(401);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando efetuo o login com campos vazios, o retorno será 400', async () => {
-            const postLoginRequest = require('../fixture/controller/requests/requisicaoUserControllerLoginCamposVazios.json');
+            const postLoginRequest = require('../fixture/controller/requests/user/requisicaoUserControllerLoginCamposVazios.json');
 
             const userServiceMock = sinon.stub(userService, 'login');
             userServiceMock.throws(new Error('Usuário e senha obrigatórios.'));
 
             const resposta = await request(app).post(postUserLogin).send(postLoginRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerLogin400.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerLogin400.json');
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando efetuo o login com json vazio, o retorno será 400', async () => {
-            const postLoginRequest = require('../fixture/controller/requests/requisicaoUserControllerLoginJsonVazio.json');
+            const postLoginRequest = require('../fixture/controller/requests/user/requisicaoUserControllerLoginJsonVazio.json');
 
             const userServiceMock = sinon.stub(userService, 'login');
             userServiceMock.throws(new Error('Usuário e senha obrigatórios.'));
 
             const resposta = await request(app).post(postUserLogin).send(postLoginRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerLogin400.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerLogin400.json');
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -135,7 +135,7 @@ describe('User Controller', () => {
             ]);
 
             const resposta = await request(app).get(getUser);
-            const respostaEsperada = require('../fixture/controller/responses/respostaUserControllerGetUser200.json');
+            const respostaEsperada = require('../fixture/controller/responses/user/respostaUserControllerGetUser200.json');
 
             expect(resposta.status).to.equal(200);
             expect(resposta.body).to.deep.equal(respostaEsperada);

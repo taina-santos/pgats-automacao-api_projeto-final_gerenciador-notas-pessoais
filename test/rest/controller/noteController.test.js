@@ -17,7 +17,7 @@ var token = "";
 
 describe('Note Controller', () => {
     before(async () => {
-        const loginBody = require('../fixture/controller/requests/requisicaoUserControllerLoginUsuarioValido.json');
+        const loginBody = require('../fixture/controller/requests/user/requisicaoUserControllerLoginUsuarioValido.json');
 
         const login = await request(app)
             .post(postUserLogin)
@@ -49,7 +49,7 @@ describe('Note Controller', () => {
             ]);
 
             const resposta = await request(app).get(getNotes).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerGetNotes200.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerGetNotes200.json');
 
             expect(resposta.status).to.equal(200);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -60,7 +60,7 @@ describe('Note Controller', () => {
             noteServiceMock.throws(new Error('Token de acesso requerido.'));
 
             const resposta = await request(app).get(getNotes);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken401.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerToken401.json');
 
             expect(resposta.status).to.equal(401);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -71,7 +71,7 @@ describe('Note Controller', () => {
             noteServiceMock.throws(new Error('Token inválido.'));
 
             const resposta = await request(app).get(getNotes).set('Authorization', `Bearer tokenInvalido`);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken403.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerToken403.json');
 
             expect(resposta.status).to.equal(403);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -80,7 +80,7 @@ describe('Note Controller', () => {
 
     describe('POST /notes/create', () => {
         it('Quando crio uma nota pessoal com dados válidos, o retorno será 201', async () => {
-            const postCreateNoteRequest = require('../fixture/controller/requests/requisicaoNoteControllerCreateNotaValida.json');
+            const postCreateNoteRequest = require('../fixture/controller/requests/note/requisicaoNoteControllerCreateNotaValida.json');
 
             const noteServiceMock = sinon.stub(noteService, 'createNote');
             noteServiceMock.returns({
@@ -91,59 +91,59 @@ describe('Note Controller', () => {
             });
 
             const resposta = await request(app).post(postCreateNote).set('Authorization', `Bearer ${token}`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerCreateNote201.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerCreateNote201.json');
 
             expect(resposta.status).to.equal(201);
             expect(resposta.body).excluding('id').to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal com os campos vazios, o retorno será 400', async () => {
-            const postCreateNoteRequest = require('../fixture/controller/requests/requisicaoNoteControllerCreateCamposVazios.json');
+            const postCreateNoteRequest = require('../fixture/controller/requests/note/requisicaoNoteControllerCreateCamposVazios.json');
 
             const noteServiceMock = sinon.stub(noteService, 'createNote');
             noteServiceMock.throws(new Error('Título e conteúdo obrigatórios.'));
 
             const resposta = await request(app).post(postCreateNote).set('Authorization', `Bearer ${token}`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerCreateNote400.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerCreateNote400.json');
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal com o JSON vazio, o retorno será 400', async () => {
-            const postCreateNoteRequest = require('../fixture/controller/requests/requisicaoNoteControllerJsonVazio.json');
+            const postCreateNoteRequest = require('../fixture/controller/requests/note/requisicaoNoteControllerJsonVazio.json');
 
             const noteServiceMock = sinon.stub(noteService, 'createNote');
             noteServiceMock.throws(new Error('Título e conteúdo obrigatórios.'));
 
             const resposta = await request(app).post(postCreateNote).set('Authorization', `Bearer ${token}`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerCreateNote400.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerCreateNote400.json');
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal sem passar nenhum token, o retorno será 401', async () => {
-            const postCreateNoteRequest = require('../fixture/controller/requests/requisicaoNoteControllerCreateNotaValida.json');
+            const postCreateNoteRequest = require('../fixture/controller/requests/note/requisicaoNoteControllerCreateNotaValida.json');
 
             const noteServiceMock = sinon.stub(noteService, 'createNote');
             noteServiceMock.throws(new Error('Token de acesso requerido.'));
 
             const resposta = await request(app).post(postCreateNote).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken401.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerToken401.json');
 
             expect(resposta.status).to.equal(401);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal enviando um token incorreto, o retorno será 403', async () => {
-            const postCreateNoteRequest = require('../fixture/controller/requests/requisicaoNoteControllerCreateNotaValida.json');
+            const postCreateNoteRequest = require('../fixture/controller/requests/note/requisicaoNoteControllerCreateNotaValida.json');
 
             const noteServiceMock = sinon.stub(noteService, 'createNote');
             noteServiceMock.throws(new Error('Token inválido.'));
 
             const resposta = await request(app).post(postCreateNote).set('Authorization', `Bearer tokenInvalido`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken403.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerToken403.json');
 
             expect(resposta.status).to.equal(403);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -160,7 +160,7 @@ describe('Note Controller', () => {
             });
 
             const resposta = await request(app).del(deleteNoteById + id).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerDeleteNote200.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerDeleteNote200.json');
 
             expect(resposta.status).to.equal(200);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -173,7 +173,7 @@ describe('Note Controller', () => {
             noteServiceMock.throws(new Error('Nota não encontrada ou não pertence ao usuário.'));
 
             const resposta = await request(app).del(deleteNoteById + id).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerDeleteNote404.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerDeleteNote404.json');
 
             expect(resposta.status).to.equal(404);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -186,7 +186,7 @@ describe('Note Controller', () => {
             noteServiceMock.throws(new Error('Nota não encontrada ou não pertence ao usuário.'));
 
             const resposta = await request(app).del(deleteNoteById + id).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerDeleteNote404.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerDeleteNote404.json');
 
             expect(resposta.status).to.equal(404);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -198,7 +198,7 @@ describe('Note Controller', () => {
             noteServiceMock.throws(new Error('Token de acesso requerido.'));
 
             const resposta = await request(app).del(deleteNoteById + id);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken401.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerToken401.json');
 
             expect(resposta.status).to.equal(401);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -210,7 +210,7 @@ describe('Note Controller', () => {
             noteServiceMock.throws(new Error('Token inválido.'));
 
             const resposta = await request(app).del(deleteNoteById + id).set('Authorization', `Bearer tokenInvalido`);
-            const respostaEsperada = require('../fixture/controller/responses/respostaNoteControllerToken403.json');
+            const respostaEsperada = require('../fixture/controller/responses/note/respostaNoteControllerToken403.json');
 
             expect(resposta.status).to.equal(403);
             expect(resposta.body).to.deep.equal(respostaEsperada);

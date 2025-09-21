@@ -4,13 +4,25 @@
   "description": "Gerenciador de notas pessoais",
   "main": "server.js",
   "scripts": {
-    "start": "node rest/server.js"
+    "start": "node rest/server.js",
+    "test-controller-rest": "mocha test/rest/controller/**/*.test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.3.7",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "mocha": "^11.7.2",
+    "mochawesome": "^7.1.4",
+    "sinon": "^21.0.0",
+    "supertest": "^7.1.4",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.2.2",
+    "@types/sinon": "^17.0.4",
+    "@types/supertest": "^6.0.3",
+    "chai-exclude": "^2.1.1"
   }
 }

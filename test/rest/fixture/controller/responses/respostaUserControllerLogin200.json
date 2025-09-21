@@ -1,0 +1,9 @@
+{
+  "message": "Login realizado com sucesso",
+  "user": {
+    "username": "taina",
+    "password": "123456",
+    "notesCount": 2
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRhaW5hIiwiaWF0IjoxNzU4NDIwNTczLCJleHAiOjE3NTg0MjQxNzN9.q8CgboJO5oRuQe6aMCuNMIeWLEu7Kz0EFacZF-4EfDE"
+}

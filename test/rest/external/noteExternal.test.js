@@ -14,7 +14,7 @@ var token = "";
 
 describe('Note External via REST', () => {
     before(async () => {
-        const loginBody = require('../fixture/external/requests/requisicaoUserExternalLoginUsuarioValido.json');
+        const loginBody = require('../fixture/external/requests/user/requisicaoUserExternalLoginUsuarioValido.json');
 
         const login = await request(host)
             .post(postUserLogin)
@@ -26,7 +26,7 @@ describe('Note External via REST', () => {
     describe('GET /notes', () => {
         it('Quando busco por todas as notas pessoais de um usuário, o retorno será 200', async () => {
             const resposta = await request(host).get(getNotes).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalGetNotes200.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalGetNotes200.json');
 
             expect(resposta.status).to.equal(200);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -34,7 +34,7 @@ describe('Note External via REST', () => {
 
         it('Quando busco por todas as notas pessoais de um usuário sem passar nenhum token, o retorno será 401', async () => {
             const resposta = await request(host).get(getNotes);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalToken401.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalToken401.json');
 
             expect(resposta.status).to.equal(401);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -42,7 +42,7 @@ describe('Note External via REST', () => {
 
         it('Quando busco por todas as notas pessoais de um usuário enviando um token incorreto, o retorno será 403', async () => {
             const resposta = await request(host).get(getNotes).set('Authorization', `Bearer tokenInvalido`);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalToken403.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalToken403.json');
 
             expect(resposta.status).to.equal(403);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -51,50 +51,50 @@ describe('Note External via REST', () => {
 
     describe('POST /notes/create', () => {
         it('Quando crio uma nota pessoal com dados válidos, o retorno será 201', async () => {
-            const postCreateNoteRequest = require('../fixture/external/requests/requisicaoNoteExternalCreateNotaValida.json');
+            const postCreateNoteRequest = require('../fixture/external/requests/note/requisicaoNoteExternalCreateNotaValida.json');
 
             const resposta = await request(host).post(postCreateNote).set('Authorization', `Bearer ${token}`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalCreateNote201.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalCreateNote201.json');
 
             expect(resposta.status).to.equal(201);
             expect(resposta.body).excluding('id').to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal com os campos vazios, o retorno será 400', async () => {
-            const postCreateNoteRequest = require('../fixture/external/requests/requisicaoNoteExternalCreateCamposVazios.json');
+            const postCreateNoteRequest = require('../fixture/external/requests/note/requisicaoNoteExternalCreateCamposVazios.json');
 
             const resposta = await request(host).post(postCreateNote).set('Authorization', `Bearer ${token}`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalCreateNote400.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalCreateNote400.json');
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal com o JSON vazio, o retorno será 400', async () => {
-            const postCreateNoteRequest = require('../fixture/external/requests/requisicaoNoteExternalJsonVazio.json');
+            const postCreateNoteRequest = require('../fixture/external/requests/note/requisicaoNoteExternalJsonVazio.json');
 
             const resposta = await request(host).post(postCreateNote).set('Authorization', `Bearer ${token}`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalCreateNote400.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalCreateNote400.json');
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal sem passar nenhum token, o retorno será 401', async () => {
-            const postCreateNoteRequest = require('../fixture/external/requests/requisicaoNoteExternalCreateNotaValida.json');
+            const postCreateNoteRequest = require('../fixture/external/requests/note/requisicaoNoteExternalCreateNotaValida.json');
 
             const resposta = await request(host).post(postCreateNote).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalToken401.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalToken401.json');
 
             expect(resposta.status).to.equal(401);
             expect(resposta.body).to.deep.equal(respostaEsperada);
         });
 
         it('Quando crio uma nota pessoal enviando um token incorreto, o retorno será 403', async () => {
-            const postCreateNoteRequest = require('../fixture/external/requests/requisicaoNoteExternalCreateNotaValida.json');
+            const postCreateNoteRequest = require('../fixture/external/requests/note/requisicaoNoteExternalCreateNotaValida.json');
 
             const resposta = await request(host).post(postCreateNote).set('Authorization', `Bearer tokenInvalido`).send(postCreateNoteRequest);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalToken403.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalToken403.json');
 
             expect(resposta.status).to.equal(403);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -106,7 +106,7 @@ describe('Note External via REST', () => {
             const id = 3;
             
             const resposta = await request(host).del(deleteNoteById + id).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalDeleteNote200.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalDeleteNote200.json');
 
             expect(resposta.status).to.equal(200);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -116,7 +116,7 @@ describe('Note External via REST', () => {
             const id = 0;
 
             const resposta = await request(host).del(deleteNoteById + id).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalDeleteNote404.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalDeleteNote404.json');
 
             expect(resposta.status).to.equal(404);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -126,7 +126,7 @@ describe('Note External via REST', () => {
             const id = 2;
 
             const resposta = await request(host).del(deleteNoteById + id).set('Authorization', `Bearer ${token}`);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalDeleteNote404.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalDeleteNote404.json');
 
             expect(resposta.status).to.equal(404);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -136,7 +136,7 @@ describe('Note External via REST', () => {
             const id = 3;
             
             const resposta = await request(host).del(deleteNoteById + id);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalToken401.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalToken401.json');
 
             expect(resposta.status).to.equal(401);
             expect(resposta.body).to.deep.equal(respostaEsperada);
@@ -146,7 +146,7 @@ describe('Note External via REST', () => {
             const id = 3;
             
             const resposta = await request(host).del(deleteNoteById + id).set('Authorization', `Bearer tokenInvalido`);
-            const respostaEsperada = require('../fixture/external/responses/respostaNoteExternalToken403.json');
+            const respostaEsperada = require('../fixture/external/responses/note/respostaNoteExternalToken403.json');
 
             expect(resposta.status).to.equal(403);
             expect(resposta.body).to.deep.equal(respostaEsperada);

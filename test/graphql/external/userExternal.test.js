@@ -10,7 +10,7 @@ describe('User external via GraphQL', () => {
         it('', async () => {});
     });
 
-    describe.only('Mutation: login', () => {
+    describe('Mutation: login', () => {
         it('Quando tento efetuar o login com usuário e senha válidos, eu recebo uma mensagem de sucesso', async () => {
             const loginSucesso = require('../fixture/requests/user/loginSucesso.json');
             const resposta = await request(host)
